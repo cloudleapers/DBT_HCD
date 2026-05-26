@@ -1,0 +1,13 @@
+version: 2
+sources:
+  - name: raw
+    database: ASSIGNMENT2
+    schema: RAW
+    tables:
+      - name: APPOINTMENTS
+      - name: CLINICS
+      - name: DOCTORS
+      - name: INSURANCE_PLANS
+      - name: PATIENTS
+      - name: PAYMENTS
+

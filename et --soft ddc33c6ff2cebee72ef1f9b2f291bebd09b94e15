@@ -1,0 +1,10 @@
+[35m358aaafc42bbac20b334802879cc9bb8f2b59d10:transfer.py[m[36m:[m[32m15[m[36m:[m    f"postgresql+psycopg2://{pg['user']}:{pg['[1;31mpassword[m']}@{pg['host']}:{pg['port']}/{pg['database']}"
+[35m358aaafc42bbac20b334802879cc9bb8f2b59d10:transfer.py[m[36m:[m[32m23[m[36m:[msf_[1;31mpassword[m = quote_plus(sf["[1;31mpassword[m"])
+[35m358aaafc42bbac20b334802879cc9bb8f2b59d10:transfer.py[m[36m:[m[32m26[m[36m:[m    f"snowflake://{sf['user']}:{sf_[1;31mpassword[m}"
+[35m322ea978725b0f257211790d4f632741572aaafc:transfer.py[m[36m:[m[32m15[m[36m:[m    f"postgresql+psycopg2://{pg['user']}:{pg['[1;31mpassword[m']}@{pg['host']}:{pg['port']}/{pg['database']}"
+[35m322ea978725b0f257211790d4f632741572aaafc:transfer.py[m[36m:[m[32m23[m[36m:[msf_[1;31mpassword[m = quote_plus(sf["[1;31mpassword[m"])
+[35m322ea978725b0f257211790d4f632741572aaafc:transfer.py[m[36m:[m[32m26[m[36m:[m    f"snowflake://{sf['user']}:{sf_[1;31mpassword[m}"
+
+[35mddc33c6ff2cebee72ef1f9b2f291bebd09b94e15:transfer.py[m[36m:[m[32m15[m[36m:[m    f"postgresql+psycopg2://{pg['user']}:{pg['[1;31mpassword[m']}@{pg['host']}:{pg['port']}/{pg['database']}"
+[35mddc33c6ff2cebee72ef1f9b2f291bebd09b94e15:transfer.py[m[36m:[m[32m23[m[36m:[msf_[1;31mpassword[m = quote_plus(sf["[1;31mpassword[m"])
+[35mddc33c6ff2cebee72ef1f9b2f291bebd09b94e15:transfer.py[m[36m:[m[32m26[m[36m:[m    f"snowflake://{sf['user']}:{sf_[1;31mpassword[m}"

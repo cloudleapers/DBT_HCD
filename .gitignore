@@ -1,0 +1,8 @@
+.env
+config.yml
+target/
+dbt_packages/
+logs/
+config.yml
+config.yml
+config.yml

@@ -1,0 +1,1 @@
+select * from {{source('raw', 'INSURANCE_PLANS')}}
