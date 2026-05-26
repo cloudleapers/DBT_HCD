@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: raw
+    database: dbt_hcd 
+    schema: RAW   
+    
+    tables:
+      - name: raw_clinics
+      - name: raw_patients
+      - name: raw_doctors
+      - name: raw_appointments
+      - name: raw_payments
+      - name: raw_insurance_plans
+      
