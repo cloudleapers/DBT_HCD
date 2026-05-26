@@ -1,0 +1,13 @@
+version: 2
+sources:
+  - name: raw
+    database: DBT_HEALTH
+    schema: RAW
+
+    tables:
+      - name: RAW_CLINICS
+      - name: RAW_PATIENTS
+      - name: RAW_DOCTORS
+      - name: RAW_APPOINTMENTS
+      - name: RAW_INSURANCE_PLANS
+      - name: RAW_PAYMENTS
