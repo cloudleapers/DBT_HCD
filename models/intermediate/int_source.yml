@@ -1,0 +1,13 @@
+sources:
+  - name: stg
+    database: dbt_hct
+    schema: STAGING
+
+    tables:
+      - name: stg_patients
+      - name: stg_doctors
+      - name: stg_appointments
+      - name: stg_payments    
+      - name: stg_insurance_plans
+      - name: stg_clinics
+      

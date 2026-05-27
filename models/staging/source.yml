@@ -1,0 +1,12 @@
+sources:
+  - name: raw
+    database: dbt_hct
+    schema: RAW
+
+    tables:
+      - name: RAW_PATIENTS
+      - name: RAW_DOCTORS
+      - name: RAW_APPOINTMENTS
+      - name: RAW_PAYMENTS
+      - name: RAW_INSURANCE_PLANS
+      - name: RAW_CLINICS
