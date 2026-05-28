@@ -24,6 +24,10 @@ select
     a.clinic_id,
     a.updated_at,
 
+    sp.amount_cents,
+    sp.payment_method,
+    sp.paid_at,
+
     {{ generate_audit_columns() }}
 
 from {{ ref('stg_appointments') }} a
@@ -33,3 +37,6 @@ inner join {{ ref('stg_patients') }} p
 
 inner join {{ ref('stg_doctors') }} d
     on a.doctor_id = d.doctor_id
+
+inner join {{ ref('stg_payments') }} sp
+    on a.appointment_id = sp.appointment_id

@@ -1,1 +1,30 @@
+version: 2
 
+models:
+
+  - name: stg_appointments
+    columns:
+
+      - name: appointment_id
+        tests:
+          - unique
+          - not_null
+
+      - name: clinic_id
+        tests:
+          - not_null
+
+      - name: doctor_id
+        tests:
+          - not_null
+
+      - name: patient_id
+        tests:
+          - not_null
+  - name: stg_clinics
+
+  - name: stg_doctors
+
+  - name: stg_patients
+
+  - name: stg_payments

@@ -12,4 +12,9 @@ sources:
       - name: raw_appointments
       - name: raw_payments
       - name: raw_insurance_plans
+      - name: appointment_types
+      - name: city_region
+      - name: plan_tiers
+      - name: specialization_dept
+      - name: status_codes
       
