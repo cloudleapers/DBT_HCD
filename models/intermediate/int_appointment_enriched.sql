@@ -1,35 +1,30 @@
 {{ config(materialized='ephemeral') }}
 
-select
-
-    -- Appointment Details
-    ap.appointment_id,
-    ap.appointment_date,
-    ap.appointment_type,
-    ap.status,
-    ap.fee_charged,
-    ap.clinic_id,
-    ap.updated_at,
-
-    -- Patient Details
-    p.patient_id,
-    p.patient_name,
-    p.email,
-    p.phone,
-    p.city,
+with appointments as 
+(
+select 
+    a.appointment_id,
+    a.patient_id,
+    concat({{ clean_name('p.first_name') }},' ',{{ clean_name('p.last_name') }}) as patient_name,
     p.gender,
-    p.plan_id,
-
-    -- Doctor Details
-    d.doctor_id,
+    p.city,
+    a.doctor_id,
     d.doctor_name,
     d.specialization,
-    d.consultation_fee,
-    d.fee_band
-from {{ ref('stg_appointments') }} ap
-
-left join {{ ref('stg_patients') }} p
-    on ap.patient_id = p.patient_id
-
-left join {{ ref('stg_doctors') }} d
-    on ap.doctor_id = d.doctor_id
+    a.clinic_id,
+    a.appointment_date,
+    a.appointment_type,
+    a.status,
+    a.fee_charged,
+    py.amount_cents,
+    a.updated_at,
+    {{ generate_audit_columns() }}
+    from {{ source('inter', 'STG_APPOINTMENTS') }} a
+    left join {{ source('inter', 'STG_PATIENTS') }} p
+        on a.patient_id = p.patient_id
+    left join {{ source('inter', 'STG_DOCTORS') }} d
+        on a.doctor_id = d.doctor_id
+    left join {{ source('inter', 'STG_PAYMENTS') }} py
+        on a.appointment_id = py.appointment_id
+)
+select * from appointments

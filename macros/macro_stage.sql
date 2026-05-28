@@ -34,3 +34,23 @@ end
     current_timestamp as _model_run_at,
     '{{ invocation_id }}' as _dbt_run_id
 {% endmacro %}
+
+
+{% macro gender(column_name) %}
+
+    case
+        when lower({{ column_name }}) in ('m', 'male') then 'Male'
+        when lower({{ column_name }}) in ('f', 'female') then 'Female'
+        else 'Unknown'
+    end
+
+{% endmacro %}
+
+
+{% macro available(column_name) %}
+    case 
+        when lower({{ column_name }}) in ('y', '1') then true
+        when lower({{ column_name }}) in ('n', '0') then false
+        else null
+    end
+{% endmacro %}

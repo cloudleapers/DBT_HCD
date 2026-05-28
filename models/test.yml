@@ -1,0 +1,81 @@
+version: 2
+
+models:
+
+  # ---------------- STAGING ----------------
+
+  - name: stg_patients
+
+    columns:
+
+      - name: patient_id
+        tests:
+          - not_null
+          - unique
+
+      - name: email
+        tests:
+          - not_null
+
+  # ---------------- INTERMEDIATE ----------------
+
+  - name: int_dim_patients
+
+    columns:
+
+      - name: patient_sk
+        tests:
+          - not_null
+          - unique
+
+      - name: patient_id
+        tests:
+          - not_null
+
+  - name: int_appointment_enriched
+
+    columns:
+
+      - name: appointment_id
+        tests:
+          - not_null
+
+      - name: patient_id
+        tests:
+          - not_null
+
+      - name: doctor_id
+        tests:
+          - not_null
+
+  # ---------------- MARTS ----------------
+  - name: fct_appointments
+
+    columns:
+
+      - name: appointment_sk
+        tests:
+          - not_null
+          - unique
+
+      - name: appointment_id
+        tests:
+          - not_null
+          - unique
+
+      - name: patient_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_patients')
+                field: patient_id
+
+      - name: status
+        tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - SCHEDULED
+                  - COMPLETED
+                  - CANCELLED
