@@ -1,41 +1,26 @@
 {{ config(materialized='table') }}
 
-with payments as (
-
-    select
-        appointment_id,
-        sum(amount_cents) / 100 as total_paid
-
-    from {{ source('raw', 'raw_payments') }}
-    where amount_cents > 0
-    group by appointment_id
-
+with appointment_enriched as (
+    select * from {{ ref('int_appointment_enriched') }}
 )
 
 select
+    {{ dbt_utils.generate_surrogate_key(['appointment_id']) }} as appointment_sk,
+    {{ dbt_utils.generate_surrogate_key(['patient_id']) }} as patient_sk,
+    patient_id,
+    appointment_id,
+    doctor_id,
 
-    {{ dbt_utils.generate_surrogate_key(['a.appointment_id']) }} as appointment_sk,
+    patient_name,
+    gender,
+    doctor_name,
+    specialization,
 
-    a.appointment_id,
-    a.patient_id,
-    a.doctor_id,
-    a.clinic_id,
+    appointment_type,
+    status,
 
-    a.first_name,
-    a.last_name,
-    a.doctor_name,
-    a.specialization,
+    total_paid,
+    payment_method,
+    paid_at
 
-    a.appointment_date,
-    a.appointment_type,
-    a.status,
-    a.fee_charged,
-
-    p.total_paid,
-
-    {{ generate_audit_columns() }}
-
-from {{ ref('int_appointment_enriched') }} a
-
-left join payments p
-    on a.appointment_id = p.appointment_id
+from appointment_enriched

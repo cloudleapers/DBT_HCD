@@ -1,0 +1,110 @@
+# schema.yml for marts models
+# Covers dim_patients and fct_appointments
+
+version: 2
+
+models:
+
+  # -----------------------------------------------------------------------
+  - name: dim_patients
+    description: "One row per unique patient. Includes appointment metrics and plan tier."
+    columns:
+
+      - name: patient_sk
+        description: "Surrogate key — hashed from patient_id"
+        tests:
+          - not_null
+          - unique          # every patient must have exactly one dim row
+
+      - name: patient_id
+        description: "Natural / business key from source"
+        tests:
+          - not_null
+          - unique
+
+      - name: full_name
+        description: "Concatenated first + last name"
+        tests:
+          - not_null
+
+      - name: plan_tier
+        description: "Insurance tier from plan_tiers seed"
+        tests:
+          - accepted_values:
+              arguments:
+              values: ['BRONZE', 'SILVER', 'GOLD']
+              # allow nulls because some patients have NULL plan_id
+              config:
+                where: "plan_id is not null"
+
+      - name: total_appointments
+        description: "Count of all appointments for this patient"
+        tests:
+          - not_null
+
+      - name: total_spend
+        description: "Sum of fee_charged across all appointments"
+        tests:
+          - not_null
+
+  # -----------------------------------------------------------------------
+  - name: fct_appointments
+    description: >
+      One row per appointment. Contains patient + doctor context
+      and payment rollup columns. Grain = appointment_id.
+
+    columns:
+
+      - name: appointment_sk
+        description: "Surrogate key — hashed from appointment_id"
+        tests:
+          - not_null
+          - unique
+
+      - name: appointment_id
+        description: "Natural key from source"
+        tests:
+          - not_null
+          - unique
+
+      - name: patient_sk
+        description: "FK to dim_patients — must exist in the dim"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_patients')
+              field: patient_sk
+
+      - name: patient_id
+        description: "FK natural key to dim_patients"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_patients')
+              field: patient_id
+
+      - name: status
+        description: "Uppercased appointment status"
+        tests:
+          - not_null
+          - accepted_values:
+             arguments:
+              values: ['SCHEDULED', 'COMPLETED', 'CANCELLED']
+
+      - name: fee_charged
+        description: "Fee billed to the patient — must be non-negative"
+        tests:
+          - not_null
+
+      - name: is_fully_paid
+        description: "Boolean flag — true if total_paid >= fee_charged"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+              values: [true, false]
+
+      - name: appointment_date
+        description: "Date of the appointment — no NULLs should survive staging"
+        tests:
+          - not_null

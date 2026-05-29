@@ -1,5 +1,5 @@
 sources:
-  - name: stg
+  - name: staging
     database: dbt_hcd
     schema: STAGING
 
