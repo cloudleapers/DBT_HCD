@@ -19,12 +19,12 @@ select
     py.amount_cents,
     a.updated_at,
     {{ generate_audit_columns() }}
-    from {{ source('inter', 'STG_APPOINTMENTS') }} a
-    left join {{ source('inter', 'STG_PATIENTS') }} p
+    from {{ref('stg_appointments') }} a
+    left join {{ ref('stg_patients') }} p
         on a.patient_id = p.patient_id
-    left join {{ source('inter', 'STG_DOCTORS') }} d
+    left join {{ ref('stg_doctors') }} d
         on a.doctor_id = d.doctor_id
-    left join {{ source('inter', 'STG_PAYMENTS') }} py
+    left join {{ ref('stg_payments') }} py
         on a.appointment_id = py.appointment_id
 )
 select * from appointments

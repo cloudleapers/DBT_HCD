@@ -8,6 +8,6 @@
     )
 }}
 
-select * from {{ source('inter', 'STG_APPOINTMENTS') }}
+select * from {{ ref('stg_appointments') }}
 
 {% endsnapshot %}

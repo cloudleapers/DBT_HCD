@@ -2,15 +2,15 @@
 
 with patients as 
 (
-    select * from {{ source('inter', 'STG_PATIENTS') }}
+    select * from {{ref('stg_patients') }}
 ),
 appointments as 
 (
-    select * from {{ source('inter', 'STG_APPOINTMENTS') }}
+    select * from {{ ref('stg_appointments') }}
 ),
-plan_tiers as 
+plan_tiers as
 (
-    select * from {{ source('inter', 'PLAN_TIERS') }}
+    select * from {{ ref('plan_tiers') }}
 )
 
 select

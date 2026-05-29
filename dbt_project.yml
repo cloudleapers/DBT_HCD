@@ -35,7 +35,14 @@ models:
     example:
     stage:
       +materialized: view
+      +schema: staging
     marts:
       +materialized: table
+      +schema: marts
     intermediate:
       +materialized: ephemeral
+      +schema: intermediate
+
+seeds:
+  healthcare_dw:
+    +schema: staging

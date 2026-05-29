@@ -8,5 +8,5 @@
         check_cols='all'
     )
 }}
-select * from {{ source('inter', 'STG_CLINICS') }}
+select * from {{ ref('stg_clinics') }}
 {% endsnapshot %}

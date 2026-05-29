@@ -9,6 +9,6 @@
     )
 }}
 
-select * from {{ source('inter', 'STG_INSURANCE_PLANS') }}
+select * from {{ ref('stg_insurance_plans') }}
 
 {% endsnapshot %}
