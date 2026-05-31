@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: raw
+    database: HEALTHCARE
+    schema: RAW
+    tables:
+      - name: raw_appointments
+      - name: raw_patients
+      - name: raw_doctors
+      - name: raw_payments
+      - name: raw_clinics
+      - name: raw_insurance_plans

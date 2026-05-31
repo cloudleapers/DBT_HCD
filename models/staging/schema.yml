@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: stg_patients
+    columns:
+      - name: patient_id
+        tests: [not_null, unique]
+      - name: email
+        tests: [not_null, unique]
+
+  - name: stg_doctors
+    columns:
+      - name: doctor_id
+        tests: [not_null, unique]
+      - name: consultation_fee
+        tests: [not_null]
+
+  - name: stg_appointments
+    columns:
+      - name: appointment_id
+        tests: [not_null, unique]
+      - name: status
+        tests:
+           - accepted_values:
+               arguments:
+                  values: ['SCHEDULED','COMPLETED','CANCELLED','NO_SHOW','RESCHEDULED']
+      - name: patient_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_patients')
+                field: patient_id
+      - name: doctor_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_doctors')
+                field: doctor_id
