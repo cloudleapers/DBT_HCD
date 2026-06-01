@@ -1,5 +1,6 @@
 {{ config(materialized='table') }}
 select
+patient_name,
 patient_id,
 total_appointments,
 total_fees,

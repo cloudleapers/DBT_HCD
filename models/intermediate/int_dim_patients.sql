@@ -27,6 +27,7 @@ select
     round(avg(a.fee_charged), 2) as avg_fee,
     p.updated_at,
     {{ generate_audit_columns() }}
+
 from patients p
 left join appointments a
     on p.patient_id = a.patient_id
