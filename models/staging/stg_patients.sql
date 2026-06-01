@@ -21,7 +21,7 @@ plan_id,
 updated_at,
 {{ generate_audit_columns() }}
 from source
-where lower(trim(email)) like '%@%.%' 
+where lower(trim(email)) not like '%@@%.%' 
 and upper(trim(first_name)) != 'TEST'
 )
 select *  from cleaned

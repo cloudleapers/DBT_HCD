@@ -10,3 +10,9 @@ sources:
       - name: RAW_PAYMENTS
       - name: RAW_INSURANCE_PLANS
       - name: RAW_CLINICS
+      - name: PLAN_TIERS
+      - name: APPOINTMENT_TYPES
+      - name: CITY_REGION
+      - name: SPECIALIZATION_DEPT
+      - name: STATUS_CODES
+      

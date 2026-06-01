@@ -5,10 +5,13 @@ select
 appointment_id,
 appointment_date,
 patient_id,
-concat(first_name,' ',last_name ) as patient_name,
+patient_name,
 doctor_id,
 doctor_name,
 specialization,
 status,
-round(amount_cents/100,2) as payment_amount
+round(amount_cents/100,2) as payment_amount,
+payment_method,
+paid_at,updated_at,
+{{ generate_audit_columns() }}
 from {{ ref('int_appointment_enriched') }}

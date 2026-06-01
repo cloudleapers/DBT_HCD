@@ -1,0 +1,49 @@
+version: 2
+
+models:
+
+  - name: dim_patients
+    description: "Patient dimension containing demographic details, insurance tier, and appointment summary metrics."
+
+    columns:
+
+      - name: patient_sk
+        description: "Unique surrogate key assigned to each patient."
+        tests:
+          - not_null
+          - unique
+
+      - name: patient_id
+        description: "Unique business identifier for the patient."
+        tests:
+          - not_null
+          - unique
+
+
+
+
+      - name: total_appointments
+        description: "Total number of appointments booked by the patient."
+        tests:
+          - not_null
+
+
+
+  - name: fct_appointments
+    description: "Appointment fact table containing appointment, patient, and payment details at the appointment level."
+
+    columns:
+
+      - name: appointment_sk
+        description: "Unique surrogate key for each appointment."
+        tests:
+          - not_null
+          - unique
+
+      - name: appointment_id
+        description: "Unique business identifier for the appointment."
+        tests:
+          - not_null
+          - unique
+
+

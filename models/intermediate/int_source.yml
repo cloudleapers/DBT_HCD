@@ -1,5 +1,5 @@
 sources:
-  - name: stg
+  - name: int
     database: dbt_hct
     schema: STAGING
 
@@ -10,4 +10,8 @@ sources:
       - name: stg_payments    
       - name: stg_insurance_plans
       - name: stg_clinics
-      
+      - name: stg_plan_tiers
+      - name: APPOINTMENT_TYPES
+      - name: CITY_REGION
+      - name: SPECIALIZATION_DEPT
+      - name: STATUS_CODES
