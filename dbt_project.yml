@@ -37,3 +37,6 @@ models:
       +materialized: view   
     marts:
       +materialized: table
+seeds:
+  dbt_local_assign2:
+    +schema: SEEDS

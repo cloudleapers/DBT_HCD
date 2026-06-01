@@ -11,3 +11,11 @@ sources:
       - name: PATIENTS
       - name: PAYMENTS
 
+  - name: Stage
+    database: ASSIGNMENT2
+    schema: RAW
+    tables:
+      - name: stg_appointments
+      - name: stg_doctors
+      - name: stg_patients
+      - name: stg_payments

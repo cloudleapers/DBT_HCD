@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: dim_patients
+    columns:
+      - name: patient_sk
+        tests: [not_null, unique]
+      - name: patient_id
+        tests: [not_null, unique]
+
+  - name: fct_appointments
+    columns:
+      - name: appointment_sk
+        tests: [not_null, unique]
+      - name: appointment_id
+        tests: [not_null, unique]
+      - name: patient_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_patients')
+                field: patient_id
