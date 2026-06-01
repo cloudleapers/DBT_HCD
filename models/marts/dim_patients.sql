@@ -2,10 +2,19 @@
 
 with appointment_enriched as (
     select * from {{ ref('int_appointment_enriched') }}
+),
+
+deduped as (
+    select *
+    from appointment_enriched
+    qualify row_number() over (
+        partition by patient_id
+        order by appointment_date asc
+    ) = 1
 )
 
 select
-    {{ dbt_utils.generate_surrogate_key(['patient_id']) }} as patient_sk,
+    {{ dbt_utils.generate_surrogate_key(['patient_id']) }}  as patient_sk,
     patient_id,
     patient_name,
     gender,
@@ -14,15 +23,14 @@ select
 
     plan_id,
     plan_name,
-    plan_tier,
+    coalesce(plan_tier, 'NONE')                         as plan_tier,
 
-    appointment_id,
-    appointment_type,
-    status,
-    total_appointments,
+    -- patient-level metrics (safe NULLs)
+    coalesce(total_appointments, 0)                         as total_appointments,
+    coalesce(total_spend, 0)                                as total_spend,
     first_appointment_date,
     last_appointment_date,
-    total_spend,
-    fee_charged -- Removed trailing comma
 
-from appointment_enriched
+    {{ generate_audit_columns() }}
+
+from deduped

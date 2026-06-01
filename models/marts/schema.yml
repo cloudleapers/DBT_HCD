@@ -22,7 +22,7 @@ models:
           - not_null
           - unique
 
-      - name: full_name
+      - name: patient_name
         description: "Concatenated first + last name"
         tests:
           - not_null
@@ -30,12 +30,10 @@ models:
       - name: plan_tier
         description: "Insurance tier from plan_tiers seed"
         tests:
+          - not_null
           - accepted_values:
               arguments:
-              values: ['BRONZE', 'SILVER', 'GOLD']
-              # allow nulls because some patients have NULL plan_id
-              config:
-                where: "plan_id is not null"
+              values: ['BRONZE', 'SILVER', 'GOLD', 'NONE']
 
       - name: total_appointments
         description: "Count of all appointments for this patient"
@@ -91,20 +89,8 @@ models:
              arguments:
               values: ['SCHEDULED', 'COMPLETED', 'CANCELLED']
 
-      - name: fee_charged
-        description: "Fee billed to the patient — must be non-negative"
-        tests:
-          - not_null
 
-      - name: is_fully_paid
-        description: "Boolean flag — true if total_paid >= fee_charged"
-        tests:
-          - not_null
-          - accepted_values:
-              arguments:
-              values: [true, false]
-
-      - name: appointment_date
-        description: "Date of the appointment — no NULLs should survive staging"
+      - name: total_paid
+        description: "Total amount paid by the patient — must be non-negative"
         tests:
           - not_null

@@ -1,17 +1,52 @@
-with dim_spend as(
-    select patient_id, patient_name, total_spend
+
+with
+
+dim_spend as (
+
+    select
+        patient_id,
+        total_spend             as dim_total_spend
+
     from {{ ref('dim_patients') }}
+
 ),
-fct_paid as(
-    select patient_id, total_paid
+
+fct_spend as (
+
+    select
+        patient_id,
+        sum(fee_charged)        as fct_total_spend
+
     from {{ ref('fct_appointments') }}
-)
-select
-    d.patient_id,
-    d.patient_name,
-    d.total_spend,
-    f.total_paid
+
+    group by patient_id
+
+),
+
+comparison as (
+
+    select
+        d.patient_id,
+        d.dim_total_spend,
+        coalesce(f.fct_total_spend, 0)      as fct_total_spend,
+
+        abs(
+            coalesce(d.dim_total_spend, 0)
+            - coalesce(f.fct_total_spend, 0)
+        )                                   as difference
+
     from dim_spend d
-    inner join fct_paid f
+
+    
+    left join fct_spend f
         on d.patient_id = f.patient_id
-    where d.total_spend != f.total_paid
+
+)
+
+select
+    patient_id,
+    dim_total_spend,
+    fct_total_spend,
+    difference
+from comparison
+where difference > 0.01

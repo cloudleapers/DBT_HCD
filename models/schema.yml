@@ -36,11 +36,10 @@ models:
 
       - name: date_of_birth
         tests:
-          - not_null        # we filtered out NULL DOB rows in staging
-
+          - not_null       
   # -----------------------------------------------------------------------
   - name: stg_doctors
-    description: "Cleaned doctor records. 6 rows expected (207 dropped)."
+    description: "Cleaned doctor records"
 
     columns:
 
