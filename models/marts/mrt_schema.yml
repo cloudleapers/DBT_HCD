@@ -10,7 +10,7 @@ models:
 
   - name: fct_appointments
     columns:
-      - name: appointment_sk
+      - name: ap_sk
         tests: [not_null, unique]
       - name: appointment_id
         tests: [not_null, unique]

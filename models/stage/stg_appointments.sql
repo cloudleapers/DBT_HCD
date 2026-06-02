@@ -5,6 +5,8 @@ WITH appointment AS (
         a.patient_id,
         a.doctor_id,
         a.clinic_id,
+        a.appointment_type,
+        a.fee_charged as appointment_fee,
         {{ try_to_date('a.appointment_date') }} AS appointment_date,
         UPPER(TRIM(a.status)) AS st_status
 
@@ -28,6 +30,8 @@ SELECT
     patient_id,
     doctor_id,
     clinic_id,
+    appointment_type,
+    appointment_fee,
     appointment_date,
     st_status,
     {{ generate_audit_columns() }}

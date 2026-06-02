@@ -7,5 +7,5 @@
     updated_at='updated_at'
   )
 }}
-select * from {{ source('raw', 'appointments') }}
+select * from {{ ref('appointments') }}
 {% endsnapshot %}

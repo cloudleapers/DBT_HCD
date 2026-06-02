@@ -2,10 +2,10 @@ with appointment_payments as (
 
     select
         {{ dbt_utils.generate_surrogate_key(['a.appointment_id']) }} as ap_sk,
-        {{ dbt_utils.generate_surrogate_key(['p.patient_id']) }} as pt_sk,
+        {{ dbt_utils.generate_surrogate_key(['a.patient_id']) }} as pt_sk,
         a.appointment_id,
         a.appointment_date,
-        a.status,
+        a.st_status,
         a.appointment_fee,
         a.patient_id,
         a.patient_name,
@@ -16,13 +16,13 @@ with appointment_payments as (
         a.fee_band,
         coalesce(sum(p.amount_cents) / 100.0, 0) as total_amt
     from {{ ref('int_appointment_enriched') }} a
-    left join {{ source('raw', 'payments') }} p
+    left join {{ ref('payments') }} p
         on p.appointment_id = a.appointment_id
        and p.amount_cents > 0
     group by
         a.appointment_id,
         a.appointment_date,
-        a.status,
+        a.st_status,
         a.appointment_fee,
         a.patient_id,
         a.patient_name,
@@ -35,10 +35,10 @@ with appointment_payments as (
 )
 
 select
-    appointment_sk,
+    ap_sk,
     appointment_id,
     appointment_date,
-    status,
+    st_status,
     appointment_fee,
     patient_id,
     patient_name,

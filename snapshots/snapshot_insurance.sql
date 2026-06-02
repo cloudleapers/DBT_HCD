@@ -7,5 +7,5 @@
     check_cols=['monthly_cost', 'is_active', 'tier']
   )
 }}
-select * from {{ source('raw', 'insurance_plans') }}
+select * from {{ ref('insurance_plans') }}
 {% endsnapshot %}

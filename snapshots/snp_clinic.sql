@@ -7,5 +7,5 @@
     check_cols=['is_operational', 'city', 'clinic_name']
   )
 }}
-select * from {{ source('raw', 'clinics') }}
+select * from {{ ref('clinics') }}
 {% endsnapshot %}
