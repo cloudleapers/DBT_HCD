@@ -1,4 +1,4 @@
-{{ config(materialization='view') }}
+{{ config(materialized='view') }}
 
 with doctors as (
 select

@@ -1,4 +1,4 @@
-{{ config(materialization='view') }}
+{{ config(materialized='view') }}
 
 with appointments as (
 select * from {{ source('raw', 'RAW_APPOINTMENTS') }}

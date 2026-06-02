@@ -14,6 +14,7 @@ updated_at,
 {{ generate_audit_columns() }}
 from {{ source('raw', 'RAW_PATIENTS') }}
 where email is not null
+    and lower(trim(email)) like '%@%.%'
     and lower(trim(email)) not like '%@@%'
     and lower(trim(email)) not like '%test%'
 )
