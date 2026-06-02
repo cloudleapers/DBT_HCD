@@ -1,14 +1,12 @@
 {{ config(
     materialized='ephemeral'
 ) }}
-
 with patients as (
 
     select *
     from {{ source('int', 'stg_patients') }}
 
 ),
-
 appointments as (
 
     select *
