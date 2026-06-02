@@ -5,21 +5,21 @@
 with patients as (
 
     select *
-    from {{ source('int', 'stg_patients') }}
+    from {{ ref('stg_patients') }}
 
 ),
 
 appointments as (
 
     select *
-    from {{ source('int', 'stg_appointments') }}
+    from {{ ref('stg_appointments') }}
 
 ),
 
 plan_tiers as (
 
     select *
-    from {{ source('int', 'stg_plan_tiers') }}
+    from {{ ref('stg_plan_tiers') }}
 
 )
 

@@ -5,25 +5,25 @@
 with appointments as (
 
     select *
-    from {{ source('int', 'stg_appointments') }}
+    from {{ ref('stg_appointments') }}
 
 ),
 patients as (
 
     select *
-    from {{ source('int', 'stg_patients') }}
+    from {{ ref('stg_patients') }}
 
 ),
 doctors as (
 
     select *
-    from {{ source('int', 'stg_doctors') }}
+    from {{ ref('stg_doctors') }}
 
 ),
 payments as (
 
     select *
-    from {{ source('int', 'stg_payments') }}
+    from {{ ref('stg_payments') }}
 
 )
 
