@@ -1,0 +1,24 @@
+sources:
+  - name: raw
+    database: DBT_HDC
+    schema: RAW
+
+    tables:
+      - name: RAW_APPOINTMENTS
+      - name: RAW_CLINICS
+      - name: RAW_DOCTORS
+      - name: RAW_INSURANCE_PLANS
+      - name: RAW_PATIENTS
+      - name: RAW_PAYMENTS
+
+  - name: stg
+    database: dbt_hcd
+    schema: STAGING
+
+    tables:
+      - name: stg_patients
+      - name: stg_doctors
+      - name: stg_appointments
+      - name: stg_payments    
+      - name: stg_insurance_plans
+      - name: stg_clinics

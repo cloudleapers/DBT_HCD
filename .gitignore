@@ -1,6 +1,9 @@
-
+analyses/
 target/
 dbt_packages/
 logs/
 venv2/
 requirements.txt
+dbt_internal_packages/
+*.duckdb
+package*

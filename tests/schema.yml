@@ -1,0 +1,44 @@
+models:
+
+  - name: dim_patients
+    description: Patient dimension table
+
+    columns:
+
+      - name: patient_sk
+        tests:
+          - not_null
+          - unique
+
+      - name: patient_id
+        tests:
+          - not_null
+
+  - name: fct_appointments
+    description: Appointment fact table
+
+    columns:
+
+      - name: appointment_sk
+        tests:
+          - not_null
+          - unique
+
+      - name: appointment_id
+        tests:
+          - not_null
+
+      - name: patient_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_patients')
+              field: patient_id
+
+      - name: status
+        tests:
+          - accepted_values:
+              values:
+                - SCHEDULED
+                - COMPLETED
+                - CANCELLED
