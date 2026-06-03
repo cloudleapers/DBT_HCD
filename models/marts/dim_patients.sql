@@ -7,11 +7,11 @@ with patient_summary as (
         sp.last_name,
         sp.email,
         sp.gender,
-        sum(pt.appointment_fee) as total_spend,
-        count(*) as total_appointments
+        coalesce(sum(pt.appointment_fee), 0) as total_spend,
+        count(pt.appointment_id) as total_appointments  -- count column, not *
 
     from {{ ref('stg_patients') }} sp
-    inner join {{ ref('stg_appointments') }} pt
+    left join {{ ref('stg_appointments') }} pt
         on sp.patient_id = pt.patient_id
 
     group by

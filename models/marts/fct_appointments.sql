@@ -14,11 +14,8 @@ with appointment_payments as (
         a.doctor_name,
         a.specialization,
         a.fee_band,
-        coalesce(sum(p.amount_cents) / 100.0, 0) as total_amt
+        coalesce(sum(a.amount_cents) / 100.0, 0) as total_amt
     from {{ ref('int_appointment_enriched') }} a
-    left join {{ ref('payments') }} p
-        on p.appointment_id = a.appointment_id
-       and p.amount_cents > 0
     group by
         a.appointment_id,
         a.appointment_date,
@@ -36,6 +33,7 @@ with appointment_payments as (
 
 select
     ap_sk,
+    pt_sk,
     appointment_id,
     appointment_date,
     st_status,

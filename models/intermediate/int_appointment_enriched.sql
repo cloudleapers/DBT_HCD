@@ -26,11 +26,11 @@ select
 
 from {{ ref('stg_appointments') }} a
 
-inner join {{ ref('stg_patients') }} p
+left join {{ ref('stg_patients') }} p
     on a.patient_id = p.patient_id
 
 inner join {{ ref('stg_doctors') }} d
     on a.doctor_id = d.doctor_id
 
-inner join {{ ref('stg_payments') }} pay
+left join {{ ref('stg_payments') }} pay
     on a.appointment_id = pay.appointment_id
