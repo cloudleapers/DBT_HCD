@@ -1,6 +1,3 @@
-# schema.yml for marts models
-# Covers dim_patients and fct_appointments
-
 version: 2
 
 models:

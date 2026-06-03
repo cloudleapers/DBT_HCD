@@ -1,6 +1,3 @@
-# schema.yml for staging models
-# Generic tests are defined here. dbt auto-generates the SQL and runs them.
-
 version: 2
 
 models:
