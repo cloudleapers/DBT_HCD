@@ -7,86 +7,80 @@ models:
 
   # -----------------------------------------------------------------------
   - name: stg_patients
-    description: "Cleaned patient records. Deduped by email."
-
     columns:
 
       - name: patient_id
-        description: "Primary key"
         tests:
           - not_null       
           - unique          
       - name: email
-        description: "Cleaned lowercase email"
         tests:
           - not_null
           - unique          
 
       - name: first_name
-        description: "Cleaned first name"
         tests:
           - not_null
 
       - name: gender
-        description: "Normalised gender value"
         tests:
           - accepted_values:
               arguments:            
-              values: ['Male', 'Female', 'Unknown']
+                values: 
+                  - 'Male'
+                  - 'Female'
+                  - 'Unknown' 
 
       - name: date_of_birth
         tests:
           - not_null       
   # -----------------------------------------------------------------------
   - name: stg_doctors
-    description: "Cleaned doctor records"
 
     columns:
 
       - name: doctor_id
-        description: "Primary key from source"
         tests:
           - not_null
           - unique
 
       - name: doctor_name
-        description: "Whitespace-trimmed doctor name"
         tests:
           - not_null
 
       - name: consultation_fee
-        description: "Must be >= 0 after filtering"
         tests:
           - not_null
 
       - name: is_available
-        description: "Boolean — true or false only"
         tests:
           - not_null
           - accepted_values:
-              values: [true, false]
+              arguments:
+                values: 
+                  - true
+                  - false
 
       - name: fee_band
-        description: "Bucketed fee category"
         tests:
           - accepted_values:
               arguments:
-              values: ['Low', 'Medium', 'High', 'Invalid']
+                values: 
+                  - 'Low'
+                  - 'Medium'
+                  - 'High'
+                  - 'Invalid'
 
   # -----------------------------------------------------------------------
   - name: stg_appointments
-    description: "Cleaned appointments."
-
     columns:
 
       - name: appointment_id
-        description: "Primary key from source"
         tests:
           - not_null
           - unique
 
       - name: patient_id
-        description: "FK to stg_patients — enforced by INNER JOIN in staging"
         tests:
           - not_null
           - relationships:
@@ -94,7 +88,6 @@ models:
               field: patient_id
 
       - name: doctor_id
-        description: "FK to stg_doctors — enforced by INNER JOIN in staging"
         tests:
           - not_null
           - relationships:
@@ -102,19 +95,19 @@ models:
               field: doctor_id
 
       - name: status
-        description: "Uppercased appointment status"
         tests:
           - not_null
           - accepted_values:
               arguments:
-              values: ['SCHEDULED', 'COMPLETED', 'CANCELLED']
+                values: 
+                  - 'SCHEDULED'
+                  - 'COMPLETED'
+                  - 'CANCELLED' 
 
       - name: appointment_date
-        description: "Must not be NULL — we filtered NULL dates in staging"
         tests:
           - not_null
 
       - name: fee_charged
-        description: "Must be >= 0 — we filtered negatives in staging"
         tests:
           - not_null

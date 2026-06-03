@@ -7,66 +7,56 @@ models:
 
   # -----------------------------------------------------------------------
   - name: dim_patients
-    description: "One row per unique patient. Includes appointment metrics and plan tier."
     columns:
 
       - name: patient_sk
-        description: "Surrogate key — hashed from patient_id"
         tests:
           - not_null
-          - unique          # every patient must have exactly one dim row
+          - unique          
 
       - name: patient_id
-        description: "Natural / business key from source"
         tests:
           - not_null
           - unique
 
       - name: patient_name
-        description: "Concatenated first + last name"
         tests:
           - not_null
 
       - name: plan_tier
-        description: "Insurance tier from plan_tiers seed"
         tests:
           - not_null
           - accepted_values:
               arguments:
-              values: ['BRONZE', 'SILVER', 'GOLD', 'NONE']
+                values: 
+                  - 'BRONZE'
+                  - 'SILVER'
+                  - 'GOLD'
+                  - 'NONE'
 
       - name: total_appointments
-        description: "Count of all appointments for this patient"
         tests:
           - not_null
 
       - name: total_spend
-        description: "Sum of fee_charged across all appointments"
         tests:
           - not_null
 
   # -----------------------------------------------------------------------
   - name: fct_appointments
-    description: >
-      One row per appointment. Contains patient + doctor context
-      and payment rollup columns. Grain = appointment_id.
-
     columns:
 
       - name: appointment_sk
-        description: "Surrogate key — hashed from appointment_id"
         tests:
           - not_null
           - unique
 
       - name: appointment_id
-        description: "Natural key from source"
         tests:
           - not_null
           - unique
 
       - name: patient_sk
-        description: "FK to dim_patients — must exist in the dim"
         tests:
           - not_null
           - relationships:
@@ -74,7 +64,6 @@ models:
               field: patient_sk
 
       - name: patient_id
-        description: "FK natural key to dim_patients"
         tests:
           - not_null
           - relationships:
@@ -82,15 +71,15 @@ models:
               field: patient_id
 
       - name: status
-        description: "Uppercased appointment status"
         tests:
           - not_null
           - accepted_values:
-             arguments:
-              values: ['SCHEDULED', 'COMPLETED', 'CANCELLED']
-
+              arguments:
+                values:
+                 - 'SCHEDULED'
+                 - 'COMPLETED'
+                 - 'CANCELLED'
 
       - name: total_paid
-        description: "Total amount paid by the patient — must be non-negative"
         tests:
           - not_null

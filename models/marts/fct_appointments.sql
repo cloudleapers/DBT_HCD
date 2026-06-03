@@ -23,12 +23,12 @@ select
     appointment_type,
     status,
 
-    -- financial measures
+
     fee_charged,
     coalesce(total_paid, 0)                                     as total_paid,
     fee_charged - coalesce(total_paid, 0)                       as outstanding_amount,
 
-    -- boolean flag
+   
     case
         when coalesce(total_paid, 0) >= fee_charged then true
         else false
